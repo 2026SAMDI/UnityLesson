@@ -10,16 +10,24 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector2 moveInput;
 
+    private void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
     public void OnMove(InputAction.CallbackContext ctx)
     {
         moveInput = ctx.ReadValue<Vector2>();
     }
 
-    void Update()
+    private void Update()
     {
         Vector3 move = transform.right * moveInput.x + transform.forward * moveInput.y;
+        move.Normalize();
         _cc.Move(move * speed * Time.deltaTime);
     }
+// ==================================================
 
     public void OnLook(InputAction.CallbackContext ctx)
     {
